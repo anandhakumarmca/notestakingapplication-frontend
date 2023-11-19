@@ -26,7 +26,7 @@ export default function ResetPassword() {
     try {
       // Replace ":randomString" with the extracted random string
       const response = await axios.put(
-        `http://localhost:5010/api/auth/resetpassword/${randomString}`,
+        `https://notestakingapplication-backend.onrender.com/api/auth/resetpassword/${randomString}`,
         values
       );
       console.log("response", response);

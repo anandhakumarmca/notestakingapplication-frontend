@@ -23,7 +23,7 @@ export default function ForgotPassword() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5010/api/auth/forgotpassword",
+        "https://notestakingapplication-backend.onrender.com/api/auth/forgotpassword",
         values 
       );
      

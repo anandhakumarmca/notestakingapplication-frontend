@@ -25,7 +25,7 @@ export default function Login() {
     setLoading(true);
     try {
       const response = await axios.post(
-        `http://localhost:5010/api/auth/login`,
+        `https://notestakingapplication-backend.onrender.com/api/auth/login`,
         values
       );
 

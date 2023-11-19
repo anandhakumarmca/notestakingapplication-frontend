@@ -1,36 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
 import axios from "axios";
+import API_URL from "../../config/global";
+import Note from "./Note";
 
 const Home = () => {
+  const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch blog posts from your backend API
-    axios
-      .get("http://localhost:5010/")
-      .then((response) => {
+    const fetchNotes = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/note/getAllNotes`);
+
         console.log("Data", response.data.data);
-        setPosts(response.data.data);
+        setNotes(response.data.data);
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error("An error occurred while fetching blog posts:", error);
+      } catch (error) {
+        console.error("An error occurred while fetching notes:", error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchNotes();
   }, []);
 
   return (
-    <Container>
+    <div>
       <h1>All Notes</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div>
-          <p>No Notes available.</p>
+        <div className="note-container">
+          {notes.map((note) => (
+            <Note key={note._id} note={note} />
+          ))}
         </div>
       )}
-    </Container>
+    </div>
   );
 };
 

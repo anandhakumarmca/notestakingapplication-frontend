@@ -32,7 +32,7 @@ export default function Register() {
     setLoading(true);
     try {
       const response = await axios.post(
-        `http://localhost:5010/api/auth/register`,
+        `https://notestakingapplication-backend.onrender.com/api/auth/register`,
         values
       );
       const data = response.data;

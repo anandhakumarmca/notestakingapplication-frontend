@@ -13,7 +13,7 @@ export default function VerifyRandomString() {
     async function verifyRandomString() {
       try {
         const response = await axios.get(
-          `http://localhost:5010/api/auth/verifyRandomString/${randomString}`
+          `https://notestakingapplication-backend.onrender.com/api/auth/verifyRandomString/${randomString}`
         );
 
         if (response.data.message === "Random String Verified") {

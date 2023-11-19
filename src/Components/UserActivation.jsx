@@ -13,7 +13,7 @@ export default function UserActivation() {
     async function activateUser() {
       try {
         const response = await axios.get(
-          `http://localhost:5010/api/auth/activate/${activationToken}`
+          `https://notestakingapplication-backend.onrender.com/api/auth/activate/${activationToken}`
         );
 
         if (response.data.message === "Account activated successfully") {

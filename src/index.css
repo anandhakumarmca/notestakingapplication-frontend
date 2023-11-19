@@ -1,6 +1,6 @@
 :root {
-  --main-color:#f39c12; /* Yellow */
-  --accent-color:#d35400; /* Orange */ 
+  --main-color: #f39c12; /* Yellow */
+  --accent-color: #d35400; /* Orange */
   --text-color: #ffffff; /* White */
 
   --secondary-color: #000000; /* Black */
@@ -8,7 +8,7 @@
   --error-color: #e74c3c; /* Red */
   --info-color: #3498db; /* Blue */
   --success-color: #2ecc71; /* Green */
-  --warning-color:  #808080; /* Gray */
+  --warning-color: #808080; /* Gray */
 }
 
 body {
@@ -138,180 +138,28 @@ body {
   font-size: 18px;
 }
 
-/* Styles for the Story component */
-div.story {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  margin-bottom: 30px;
+h1 {
+  text-align: center;
+  margin: 20px 0; /* Updated margin for better spacing */
 }
 
-@media screen and (min-width: 700px) {
-  div.story {
-    grid-template-columns: 0.9fr 1.1fr;
-  }
-}
-
-div.story .image img {
-  max-width: 100%;
-  height: auto;
-}
-
-div.story .texts h2 {
-  margin: 0;
-  font-size: 2rem;
-}
-
-div.story .texts a {
-  text-decoration: none;
-  color: inherit;
-}
-
-div.story p.info {
-  margin: 24px 0;
-  color: #888;
-  font-size: 1rem;
-  font-weight: bold;
+.note-container {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
-div.story p.info a.author {
-  color: #333;
-}
-
-div.story p.summary {
-  margin: 10px 0;
-  line-height: 1.8rem;
-}
-
-.create-story-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
+.note-card {
+  width: 300px;
+  margin: 20px;
+  padding: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f8f8f8;
-}
-
-.form-group {
-  margin-bottom: 10px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-}
-
-input[type="text"],
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.submit-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.submit-button:hover {
-  background-color: #0056b3;
-}
-
-@media (max-width: 600px) {
-  .create-story-container {
-    max-width: 100%;
-    border: none;
-    background-color: #fff;
-  }
-
-  input[type="text"],
-  textarea {
-    width: 100%;
-  }
-}
-
-/* CSS for CreateStory component */
-
-.create-story-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f8f8f8;
-}
-
-.form-group {
-  margin-bottom: 10px;
-}
-
-.form-label {
-  display: block;
-  font-weight: bold;
-}
-
-.form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.submit-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.submit-button:hover {
-  background-color: #0056b3;
-}
-
-/* For screens with a maximum width of 768px */
-@media (max-width: 768px) {
-  .create-story-container {
-    max-width: 100%;
-  }
-}
-
-/* For screens with a maximum width of 576px (typically mobile) */
-@media (max-width: 576px) {
-  .form-control {
-    width: 100%;
-  }
-  .submit-button {
-    width: 100%;
-  }
-}
-
-/* ViewStory.css */
-
-.view-story-card {
-  margin: 0 auto;
-  max-width: 100%;
+  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.view-story-card img {
-  max-width: 100%;
-}
-
-/* Media Query for Responsive Design */
 @media (max-width: 768px) {
-  .view-story-card {
-    max-width: 100%;
+  .note-card {
+    width: 100%;
   }
 }
-
-
