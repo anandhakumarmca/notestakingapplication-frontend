@@ -1,7 +1,15 @@
-import React from 'react';
-import { Card, ListGroup } from 'react-bootstrap';
+import React from "react";
+import { Card, ListGroup, Button } from "react-bootstrap";
 
-const Note = ({ note }) => {
+const Note = ({ note, onDelete, onEdit }) => {
+  const handleDelete = () => {
+    onDelete(note.id);
+  };
+
+  const handleEdit = () => {
+    onEdit(note.id);
+  };
+
   return (
     <Card className="note-card">
       <Card.Body>
@@ -9,7 +17,14 @@ const Note = ({ note }) => {
         <Card.Text>{note.content}</Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
-        <ListGroup.Item>{/* Additional details or actions can go here */}</ListGroup.Item>
+        <ListGroup.Item>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+          <Button variant="primary" onClick={handleEdit} className="ml-2">
+            Edit
+          </Button>
+        </ListGroup.Item>
       </ListGroup>
     </Card>
   );

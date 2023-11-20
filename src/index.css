@@ -158,8 +158,42 @@ h1 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.note-card .list-group-flush .list-group-item button {
+  margin-right: 5px;
+}
+
 @media (max-width: 768px) {
   .note-card {
     width: 100%;
+  }
+
+  .note-card .list-group-flush .list-group-item {
+    /* Adjust styles for smaller screens */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Styles for buttons in smaller screens */
+  .note-card .list-group-flush .list-group-item button {
+    margin-top: 5px;
+    margin-right: 0; /* Reset margin for buttons */
+  }
+}
+
+.no-notes {
+  text-align: center;
+}
+
+.no-notes img {
+  margin-top: 20px; /* Adjust as needed */
+}
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 768px) {
+  .no-notes img {
+    width: 50%; /* Adjust the width as needed */
+    height: auto;
+    margin-top: 10px; /* Adjust as needed */
   }
 }
