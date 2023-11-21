@@ -1,18 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Register from "./Components/Register";
 import { ToastContainer } from "react-toastify";
-import Login from "./Components/Login";
-import ForgotPassword from "./Components/ForgotPassword";
-import ResetPassword from "./Components/ResetPassword";
-import VerifyRandomString from "./Components/VerifyRandomString";
 import Navbar from "./Components/Navbar";
-import UserActivation from "./Components/UserActivation";
-import Home from "./Components/Home";
 import Info from "./Components/Info";
+import Home from "./Components/Home";
+import SearchNotes from "./Components/SearchNotes"; 
 import About from "./Components/About";
 import AddNotes from "./Components/AddNotes";
 import EditNotes from "./Components/EditNote";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
+import UserActivation from "./Components/UserActivation";
+import ForgotPassword from "./Components/ForgotPassword";
+import ResetPassword from "./Components/ResetPassword";
+import VerifyRandomString from "./Components/VerifyRandomString";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Info />} />
         <Route path="/getAllNotes/:userId" element={<Home />} />
+        <Route path="/searchNotes/:userId" element={<SearchNotes />} />
         <Route path="/login" element={<Login />} />
         <Route path="/addNotes" element={<AddNotes />} />
         <Route path="/editNote/:id" element={<EditNotes />} />

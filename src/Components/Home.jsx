@@ -5,12 +5,21 @@ import "react-toastify/dist/ReactToastify.css";
 import API_URL from "../../config/global";
 import { useNavigate, useParams } from "react-router-dom";
 import Note from "./Note";
+import SearchNotes from "./SearchNotes"; // Import the SearchNotes component
 
 const Home = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // State to store search results
+  const [searchResults, setSearchResults] = useState([]);
+
+  // Function to handle search results
+  const handleSearchResults = (results) => {
+    setSearchResults(results);
+  };
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -23,15 +32,15 @@ const Home = () => {
           return;
         }
 
-        const response = await axios.get(
-          `${API_URL}/note/getAllNotes/${userId}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
+        // Use search results if available, otherwise fetch all notes
+        const response = searchResults.length
+          ? { data: { data: searchResults } }
+          : await axios.get(`${API_URL}/note/getAllNotes/${userId}`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+            });
 
         setNotes(response.data.data);
         setLoading(false);
@@ -42,7 +51,7 @@ const Home = () => {
     };
 
     fetchNotes();
-  }, []);
+  }, [userId, searchResults]);
 
   const handleDelete = async (noteId) => {
     try {
@@ -78,20 +87,31 @@ const Home = () => {
   };
 
   const handleEdit = (noteId) => {
-    // Handle the edit logic or navigate to the edit page
-    console.log(`Editing note with ID: ${noteId}`);
     navigate(`/editNote/${noteId}`);
-    // You can add your logic to navigate to the edit page if needed
   };
 
   return (
     <div>
       <h1>All Notes</h1>
+
+      <SearchNotes userId={userId} onSearchResults={handleSearchResults} />
+
       {loading ? (
         <h3 align="center">Loading...</h3>
       ) : (
         <div className="note-container">
-          {notes.length > 0 ? (
+          {searchResults.length > 0 ? (
+            // Display search results if available
+            searchResults.map((note) => (
+              <Note
+                key={note._id}
+                note={note}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+              />
+            ))
+          ) : // Display all notes if no search results
+          notes.length > 0 ? (
             notes.map((note) => (
               <Note
                 key={note._id}
