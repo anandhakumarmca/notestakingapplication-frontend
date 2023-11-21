@@ -10,7 +10,9 @@ import Navbar from "./Components/Navbar";
 import UserActivation from "./Components/UserActivation";
 import Home from "./Components/Home";
 import Info from "./Components/Info";
-
+import About from "./Components/About";
+import AddNotes from "./Components/AddNotes";
+import EditNotes from "./Components/EditNote";
 
 function App() {
   return (
@@ -18,8 +20,11 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Info />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/getAllNotes/:userId" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/addNotes" element={<AddNotes />} />
+        <Route path="/editNote/:id" element={<EditNotes />} />
+        <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/activate/:activationToken" element={<UserActivation />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />

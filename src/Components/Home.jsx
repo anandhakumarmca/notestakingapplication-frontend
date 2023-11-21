@@ -3,9 +3,12 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import API_URL from "../../config/global";
+import { useNavigate, useParams } from "react-router-dom";
 import Note from "./Note";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { userId } = useParams();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,20 +18,21 @@ const Home = () => {
         const authToken = localStorage.getItem("authToken");
 
         if (!authToken) {
-          // Handle the case where the user is not authenticated
-          toast.error("User is not authenticated. ");
+          toast.error("User is not authenticated.");
           setLoading(false);
           return;
         }
 
-        const response = await axios.get(`${API_URL}/note/getAllNotes`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
+        const response = await axios.get(
+          `${API_URL}/note/getAllNotes/${userId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
 
-        console.log("Data", response.data.data);
         setNotes(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -40,19 +44,66 @@ const Home = () => {
     fetchNotes();
   }, []);
 
+  const handleDelete = async (noteId) => {
+    try {
+      const authToken = localStorage.getItem("authToken");
+
+      if (!authToken) {
+        toast.error("User is not authenticated.");
+        return;
+      }
+
+      const response = await axios.delete(
+        `${API_URL}/note/deleteNote/${noteId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Note deleted successfully.");
+        setNotes((prevNotes) =>
+          prevNotes.filter((note) => note._id !== noteId)
+        );
+      } else {
+        toast.error("Failed to delete note.");
+      }
+    } catch (error) {
+      console.error("Error deleting note:", error);
+      toast.error("Error deleting note. Please try again.");
+    }
+  };
+
+  const handleEdit = (noteId) => {
+    // Handle the edit logic or navigate to the edit page
+    console.log(`Editing note with ID: ${noteId}`);
+    navigate(`/editNote/${noteId}`);
+    // You can add your logic to navigate to the edit page if needed
+  };
+
   return (
     <div>
       <h1>All Notes</h1>
       {loading ? (
-        <p>Loading...</p>
+        <h3 align="center">Loading...</h3>
       ) : (
         <div className="note-container">
           {notes.length > 0 ? (
-            notes.map((note) => <Note key={note._id} note={note} />)
+            notes.map((note) => (
+              <Note
+                key={note._id}
+                note={note}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+              />
+            ))
           ) : (
             <div className="no-notes">
               <h2>No notes available. </h2>
-              <img src="/nonotes.png" alt="No Notes" />
+              <img src="/nonotes.png" alt="No Notes" width="250" height="250" />
             </div>
           )}
         </div>

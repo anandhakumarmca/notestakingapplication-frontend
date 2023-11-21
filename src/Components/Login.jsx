@@ -33,6 +33,8 @@ export default function Login() {
 
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("userName", data.userName);
+      localStorage.setItem("userId", data.userId);
+      const userId = localStorage.getItem("userId");
 
       toast.success("Welcome To Home Page", {
         position: "top-right",
@@ -45,7 +47,7 @@ export default function Login() {
         theme: "colored",
       });
 
-      navigate("/home", { state: { message: "Hi" } });
+      navigate(`/getAllNotes/${userId}`);
     } catch (err) {
       setLoading(false);
       setError("Email or password is not valid");
@@ -161,8 +163,8 @@ export default function Login() {
                   )}
                 </button>
                 <p className="mt-3">
-                  Demo info: Email: learnwithanandh@gmail.com |
-                  Password: Anandh1234
+                  Demo info: Email: learnwithanandh@gmail.com | Password:
+                  Anandh1234
                 </p>
 
                 <div className="mt-2">

@@ -23,8 +23,8 @@ const Navbar = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userName");
 
-    // Redirect to the login page
-    navigate("/home");
+   const userId = localStorage.getItem("userId");
+      navigate(`/getAllNotes/${userId}`);
   };
 
   // List of paths where the Navbar should not be displayed
@@ -47,8 +47,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <Link to="/home" className="navbar-brand">
+        <Link to="/" className="navbar-brand">
           <img src="/notes.png" alt="Logo" width="50" height="50" />
+          <span className="ms-2">Notes App</span>
         </Link>
 
         <button
@@ -62,26 +63,65 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             {isAuthenticated ? (
-              // If the user is logged in, show avatar and logout as an icon
-              <li className="nav-item">
-                <div className="nav-link">
-                  <div className="d-flex align-items-center">
-                    <div className="avatar-badge">
-                      <span className="avatar-letter">{avatarLetter}</span>
+              <>
+                <li className="nav-item">
+                  <div className="nav-link">
+                    <div className="d-flex align-items-center">
+                      <Link to="/addNotes" className="nav-link">
+                        <img src="/add.png" alt="Logo" width="25" height="25" />
+                        <span className="ms-2">Add Notes</span>
+                      </Link>
                     </div>
-                    <Button
-                      variant="link"
-                      className="logout-icon"
-                      onClick={handleLogout}
-                    >
-                      <FontAwesomeIcon icon={faSignOutAlt} />
-                    </Button>
                   </div>
-                </div>
-              </li>
+                </li>
+                <li className="nav-item">
+                  <div className="nav-link">
+                    <div className="d-flex align-items-center">
+                      <Link to="/about" className="nav-link">
+                        <img
+                          src="/info.png"
+                          alt="Logo"
+                          width="25"
+                          height="25"
+                        />
+                        <span className="ms-2">About</span>
+                      </Link>
+                    </div>
+                  </div>
+                </li>
+                <li className="nav-item">
+                  <div className="nav-link">
+                    <div className="d-flex align-items-center">
+                      <div className="avatar-badge">
+                        <span className="avatar-letter">{avatarLetter}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li className="nav-item">
+                  <div className="nav-link">
+                    <div className="d-flex align-items-center">
+                      <Button
+                        variant="link"
+                        className="logout-icon"
+                        onClick={handleLogout}
+                      >
+                        <img
+                          src="/logout.png"
+                          alt="Logo"
+                          width="25"
+                          height="25"
+                        />
+                        <span className="ms-2">Logout</span>
+                      </Button>
+                    </div>
+                  </div>
+                </li>
+              </>
             ) : (
               // If the user is not logged in, show the login link
               <li
@@ -90,7 +130,8 @@ const Navbar = () => {
                 }`}
               >
                 <Link to="/login" className="nav-link">
-                  Login
+                  <img src="/login.png" alt="Logo" width="25" height="25" />
+                  <span className="ms-2">Login</span>
                 </Link>
               </li>
             )}
