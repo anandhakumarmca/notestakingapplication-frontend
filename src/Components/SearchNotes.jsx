@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Oval } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"; // Import 'toast' from 'react-toastify'
 import API_URL from "../../config/global";
@@ -59,7 +60,22 @@ const SearchNotes = ({ userId, onSearchResults }) => {
         Search
       </button>
 
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <div className="d-flex justify-content-center">
+          <Oval
+            height={30}
+            width={30}
+            color="#fff"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+            ariaLabel="oval-loading"
+            secondaryColor="#86b7fe"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </form>
   );
 };

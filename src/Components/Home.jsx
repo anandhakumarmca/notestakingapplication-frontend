@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { Oval } from "react-loader-spinner";
 import "react-toastify/dist/ReactToastify.css";
 import API_URL from "../../config/global";
 import { useNavigate, useParams } from "react-router-dom";
 import Note from "./Note";
-import SearchNotes from "./SearchNotes"; // Import the SearchNotes component
+import SearchNotes from "./SearchNotes";
 
 const Home = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // State to store search results
   const [searchResults, setSearchResults] = useState([]);
+  const [searchError, setSearchError] = useState(null);
 
-  // Function to handle search results
   const handleSearchResults = (results) => {
-    setSearchResults(results);
+    if (results.error) {
+      setSearchError(results.error);
+    } else {
+      setSearchError(null);
+      setSearchResults(results);
+    }
   };
 
   useEffect(() => {
@@ -32,7 +36,6 @@ const Home = () => {
           return;
         }
 
-        // Use search results if available, otherwise fetch all notes
         const response = searchResults.length
           ? { data: { data: searchResults } }
           : await axios.get(`${API_URL}/note/getAllNotes/${userId}`, {
@@ -47,6 +50,7 @@ const Home = () => {
       } catch (error) {
         console.error("An error occurred while fetching notes:", error);
         setLoading(false);
+        setSearchError("Error fetching notes. Please try again.");
       }
     };
 
@@ -90,6 +94,13 @@ const Home = () => {
     navigate(`/editNote/${noteId}`);
   };
 
+  const handleRefresh = () => {
+    // Manually refresh the component by setting loading to true
+    setLoading(true);
+    setSearchResults([]);
+    setSearchError(null);
+  };
+
   return (
     <div>
       <h1>All Notes</h1>
@@ -97,10 +108,29 @@ const Home = () => {
       <SearchNotes userId={userId} onSearchResults={handleSearchResults} />
 
       {loading ? (
-        <h3 align="center">Loading...</h3>
+        <div className="d-flex justify-content-center">
+          <Oval
+            height={30}
+            width={30}
+            color="#fff"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+            ariaLabel="oval-loading"
+            secondaryColor="#86b7fe"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
       ) : (
         <div className="note-container">
-          {searchResults.length > 0 ? (
+          {searchError ? (
+            // Display an error message
+            <div className="error-message">
+              <p>{searchError}</p>
+              <button onClick={handleRefresh}>Refresh</button>
+            </div>
+          ) : searchResults.length > 0 ? (
             // Display search results if available
             searchResults.map((note) => (
               <Note
@@ -110,8 +140,8 @@ const Home = () => {
                 onEdit={handleEdit}
               />
             ))
-          ) : // Display all notes if no search results
-          notes.length > 0 ? (
+          ) : notes.length > 0 ? (
+            // Display all notes if no search results
             notes.map((note) => (
               <Note
                 key={note._id}
