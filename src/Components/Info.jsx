@@ -8,17 +8,9 @@ export default function Info() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const delay = 5000; // 5 seconds delay
+    const delay = 3000; // 3 seconds delay
     const timeout = setTimeout(() => {
       setLoading(false);
-      const authToken = localStorage.getItem("authToken");
-      const userId = localStorage.getItem("userId");
-
-      if (authToken) {
-        // User is already logged in, redirect to getAllNotes page
-        navigate(`/getAllNotes/${userId}`);
-        return;
-      }
     }, delay);
 
     return () => clearTimeout(timeout);
@@ -27,7 +19,16 @@ export default function Info() {
   useEffect(() => {
     const delay = 7000; // 7 seconds delay
     const timeout = setTimeout(() => {
-      navigate("/login");
+      const authToken = localStorage.getItem("authToken");
+      const userId = localStorage.getItem("userId");
+
+      if (authToken) {
+        // User is already logged in, redirect to getAllNotes page
+        navigate(`/getAllNotes/${userId}`);
+        return;
+      } else {
+        navigate("/login");
+      }
     }, delay);
 
     return () => clearTimeout(timeout);

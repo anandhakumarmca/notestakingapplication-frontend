@@ -23,8 +23,7 @@ const Navbar = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userName");
 
-   const userId = localStorage.getItem("userId");
-      navigate(`/getAllNotes/${userId}`);
+      navigate(`/login`);
   };
 
   // List of paths where the Navbar should not be displayed
